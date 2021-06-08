@@ -82,6 +82,22 @@ ssetfinder() {
   done
 }
 
+githubSearch() {
+  figlet Github Search
+
+  read -p 'identify the domain: ' domain
+  while :
+  do
+    if [ "$notify_enabled" == "true" ]
+    then
+      python3 /opt/github-search/github-subdomains.py -t GITHUB_TOKEN -d $domain | anew tmp/subdomains.txt | notify -silent
+    else
+      python3 /opt/github-search/github-subdomains.py -t GITHUB_TOKEN -d $domain | anew tmp/subdomains.txt
+    fi
+    sleep 3600
+  done
+}
+
 search_by_xss() {
   figlet XSS
 
@@ -116,6 +132,7 @@ Will search by domain and write tmp/subdomains.txt
 2 - chaos
 3 - hacktrails
 4 - assetfinder
+5 - github search
 
 99 - search by xss
 100 - enable notify
@@ -138,6 +155,9 @@ case $service in
     ;;
   '4' | 4)
     ssetfinder
+    ;;
+  '5' | 5)
+    githubSearch
     ;;
   '99' | 99)
     search_by_xss
