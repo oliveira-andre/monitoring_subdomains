@@ -66,6 +66,22 @@ hcktrails() {
   done
 }
 
+ssetfinder() {
+  figlet Assetfinder
+
+  read -p 'identify the domain: ' domain
+  while :
+  do
+    if [ "$notify_enabled" == "true" ]
+    then
+      assetfinder -subs-only $domain | anew tmp/subdomains.txt | notify -silent
+    else
+      assetfinder -subs-only $domain | anew tmp/subdomains.txt
+    fi
+    sleep 3600
+  done
+}
+
 search_by_xss() {
   figlet XSS
 
@@ -99,6 +115,7 @@ Will search by domain and write tmp/subdomains.txt
 1 - subfinder
 2 - chaos
 3 - hacktrails
+4 - assetfinder
 
 99 - search by xss
 100 - enable notify
@@ -118,6 +135,9 @@ case $service in
     ;;
   '3' | 3)
     hcktrails
+    ;;
+  '4' | 4)
+    ssetfinder
     ;;
   '99' | 99)
     search_by_xss
