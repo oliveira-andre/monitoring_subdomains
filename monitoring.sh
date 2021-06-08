@@ -42,9 +42,9 @@ caos() {
   do
     if [ "$notify_enabled" == "true" ]
     then
-      chaos -d $domain -silent -o tmp/subdomains.txt | notify -silent
+      chaos -d $domain -silent | anew tmp/subdomains.txt | notify -silent
     else
-      chaos -d $domain -silent -o tmp/subdomains.txt
+      chaos -d $domain -silent | anew tmp/subdomains.txt
     fi
     sleep 3600
   done
