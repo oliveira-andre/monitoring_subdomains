@@ -30,17 +30,27 @@ chmod +x ./monitoring.sh && ./monitoring.sh
 ### Subdomains Finder
 
 ```
+ __  __             _ _             _             
+|  \/  | ___  _ __ (_) |_ ___  _ __(_)_ __   __ _ 
+| |\/| |/ _ \| '_ \| | __/ _ \| '__| | '_ \ / _` |
+| |  | | (_) | | | | | || (_) | |  | | | | | (_| |
+|_|  |_|\___/|_| |_|_|\__\___/|_|  |_|_| |_|\__, |
+                                            |___/ 
+
 Will search by domain and write tmp/subdomains.txt
 
-0 - crt.sh                                                         
-1 - subfinder                                                      
-2 - chaos                                                          
-3 - hacktrails                                                     
+0 - crt.sh 
+1 - subfinder
+2 - chaos
+3 - hacktrails
+4 - assetfinder
+5 - github search
+6 - amass
 
-99 - search by xss                                                 
-100 - enable notify                                                
+99 - search by xss
+100 - enable notify
 
-Choose your service: 1
+Choose your service: 
 ```
 
 > if you enable notify you need to configure previously the bot
