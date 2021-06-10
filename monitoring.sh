@@ -98,6 +98,22 @@ githubSearch() {
   done
 }
 
+mass() {
+  figlet Amass
+
+  read -p 'identify the domain: ' domain
+  while :
+  do
+    if [ "$notify_enabled" == "true" ]
+    then
+      amass enum -d $domain | anew tmp/subdomains.txt | notify -silent
+    else
+      amass enum -d $domain | anew tmp/subdomains.txt
+    fi
+    sleep 3600
+  done
+}
+
 search_by_xss() {
   figlet XSS
 
@@ -133,6 +149,7 @@ Will search by domain and write tmp/subdomains.txt
 3 - hacktrails
 4 - assetfinder
 5 - github search
+6 - amass
 
 99 - search by xss
 100 - enable notify
@@ -158,6 +175,9 @@ case $service in
     ;;
   '5' | 5)
     githubSearch
+    ;;
+  '6' | 6)
+    mass
     ;;
   '99' | 99)
     search_by_xss
