@@ -1,2 +1,2 @@
 run:
-	chmod +x ./monitoring.sh && source monitoring.sh
+	chmod +x ./src/*.sh && ./src/monitoring.sh
