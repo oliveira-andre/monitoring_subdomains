@@ -114,24 +114,20 @@ mass() {
   done
 }
 
-search_by_xss() {
-  figlet XSS
+validateUrls() {
+  figlet HTTPX
 
-  file='tmp/subdomains.txt'
-  while :
-  do
-    while read -r subdomain
-    do
-      echo "searching by XSS in: $subdomain"
-      if [ "$notify_enabled" == "true" ]
-      then
-        gau -subs $subdomain | dalfox pipe --silence --skip-bav | notify -silent
-      else
-        gau -subs $subdomain | dalfox pipe --silence --skip-bav
-      fi
-    done < $file
-    sleep 3600
-  done
+  file="tmp/subdomains_unresolved.txt"
+  mv tmp/subdomains.txt $file
+
+  if [ "$notify_enabled" == "true" ]
+  then
+    cat $file | httpx -silent | anew tmp/subdomains.txt | notify -silent
+  else
+    cat $file | httpx -silent | anew tmp/subdomains.txt
+  fi
+
+  rm -rf $file
 }
 
 #### END FUNCTIONS ####
@@ -151,6 +147,7 @@ Will search by domain and write tmp/subdomains.txt
 5 - github search
 6 - amass
 
+98 - validate URLS
 99 - search by xss
 100 - enable notify
 "
@@ -179,8 +176,11 @@ case $service in
   '6' | 6)
     mass
     ;;
+  '98' | 98)
+    validateUrls
+    ;;
   '99' | 99)
-    search_by_xss
+    ./src/search_xss.sh
     ;;
   '100' | 100)
     echo "run this: export NOTIFY=true"
