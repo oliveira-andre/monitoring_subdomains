@@ -22,7 +22,7 @@ make run
 or
 
 ```
-chmod +x ./monitoring.sh && ./monitoring.sh
+chmod +x ./src/*.sh && ./src/monitoring.sh
 ```
 
 ## Steps
