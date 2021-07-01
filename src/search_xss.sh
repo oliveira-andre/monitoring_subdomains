@@ -23,7 +23,6 @@ dalfo() {
 kxs() {
   figlet KXSS
 
-  file='tmp/subdomains.txt'
   while :
   do
     if [ "$notify_enabled" == "true" ]
@@ -41,7 +40,6 @@ kxs() {
 gf_xss() {
   figlet GF
 
-  file='tmp/subdomains.txt'
   while :
   do
     if [ "$notify_enabled" == "true" ]
@@ -49,6 +47,23 @@ gf_xss() {
       cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss | notify -silent
     else
       cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss
+    fi
+    sleep 3600
+  done
+}
+
+rushing_paramspider() {
+  figlet Rush ParamSpider
+
+  while :
+  do
+    if [ "$notify_enabled" == "true" ]
+    then
+      rush -i tmp/subdomains.txt 'python3 /opt/ParamSpider/paramspider.py -d {}'
+      cat output/**/*.txt | anew tmp/xss | notify -silent
+    else
+      rush -i tmp/subdomains.txt 'python3 /opt/ParamSpider/paramspider.py -d {}'
+      cat output/**/*.txt | anew tmp/xss
     fi
     sleep 3600
   done
@@ -66,6 +81,7 @@ Will search by domain and write tmp/js.txt
 0 - Dalfox 
 1 - Kxss 
 2 - GF 
+3 - Rush with ParamSpider 
 
 99 - search by subdomains
 100 - enable notify
@@ -82,6 +98,9 @@ case $service in
     ;;
   '2' | 2)
     gf_xss
+    ;;
+  '3' | 3)
+    rushing_paramspider
     ;;
   '99' | 99)
     ./src/monitoring.sh
