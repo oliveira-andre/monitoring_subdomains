@@ -26,7 +26,6 @@ kxs() {
   file='tmp/subdomains.txt'
   while :
   do
-    echo "searching by XSS in: $subdomain"
     if [ "$notify_enabled" == "true" ]
     then
       cat tmp/subdomains.txt | waybackurls | kxss | anew tmp/kxss | notify -silent
@@ -34,6 +33,22 @@ kxs() {
     else
       cat tmp/subdomains.txt | waybackurls | kxss | anew tmp/kxss
       cat tmp/kxss | awk '{print $2}' | anew xss
+    fi
+    sleep 3600
+  done
+}
+
+gf_xss() {
+  figlet GF
+
+  file='tmp/subdomains.txt'
+  while :
+  do
+    if [ "$notify_enabled" == "true" ]
+    then
+      cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss | notify -silent
+    else
+      cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss
     fi
     sleep 3600
   done
@@ -48,8 +63,9 @@ notify_enabled=$NOTIFY
 echo "
 Will search by domain and write tmp/js.txt
 
-0 - dalfox 
-1 - kxss 
+0 - Dalfox 
+1 - Kxss 
+2 - GF 
 
 99 - search by subdomains
 100 - enable notify
@@ -63,6 +79,9 @@ case $service in
     ;;
   '1' | 1)
     kxs
+    ;;
+  '2' | 2)
+    gf_xss
     ;;
   '99' | 99)
     ./src/monitoring.sh
