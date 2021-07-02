@@ -177,7 +177,7 @@ case $service in
   '6' | 6)
     mass
     ;;
-  '98' | 97)
+  '97' | 97)
     validateUrls
     ;;
   '98' | 98)
