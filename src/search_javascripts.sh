@@ -63,6 +63,19 @@ validateJavascripts() {
   rm -rf $file
 }
 
+collectorJavascript() {
+  figlet Js collector
+
+  cat tmp/js.txt | python3 /opt/collector.py output
+
+  if [ "$notify_enabled" == "true" ]
+  then
+    wc -l output/* | notify -silent
+  else
+    wc -l output/*
+  fi
+}
+
 #### END FUNCTIONS ####
 
 figlet JS Enumeration
