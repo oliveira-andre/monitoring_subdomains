@@ -11,9 +11,9 @@ dalfo() {
       echo "searching by XSS in: $subdomain"
       if [ "$notify_enabled" == "true" ]
       then
-        gau -subs $subdomain | dalfox pipe --silence --skip-bav | anew tmp/xss | notify -silent
+        gau -subs $subdomain | dalfox pipe --silence --skip-bav | anew tmp/xss.txt | notify -silent
       else
-        gau -subs $subdomain | dalfox pipe --silence --skip-bav | anew tmp/xss
+        gau -subs $subdomain | dalfox pipe --silence --skip-bav | anew tmp/xss.txt
       fi
     done < $file
     sleep 3600
@@ -28,10 +28,12 @@ kxs() {
     if [ "$notify_enabled" == "true" ]
     then
       cat tmp/subdomains.txt | waybackurls | kxss | anew tmp/kxss | notify -silent
-      cat tmp/kxss | awk '{print $2}' | anew xss
+      cat tmp/kxss | awk '{print $2}' | anew xss.txt
+      rm -rf tmp/kxss
     else
       cat tmp/subdomains.txt | waybackurls | kxss | anew tmp/kxss
-      cat tmp/kxss | awk '{print $2}' | anew xss
+      cat tmp/kxss | awk '{print $2}' | anew xss.txt
+      rm -rf tmp/kxss
     fi
     sleep 3600
   done
@@ -44,9 +46,9 @@ gf_xss() {
   do
     if [ "$notify_enabled" == "true" ]
     then
-      cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss | notify -silent
+      cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss.txt | notify -silent
     else
-      cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss
+      cat tmp/subdomains.txt | waybackurls | gf xss | anew tmp/xss.txt
     fi
     sleep 3600
   done
@@ -60,10 +62,12 @@ rushing_paramspider() {
     if [ "$notify_enabled" == "true" ]
     then
       rush -i tmp/subdomains.txt 'python3 /opt/ParamSpider/paramspider.py -d {}'
-      cat output/**/*.txt | anew tmp/xss | notify -silent
+      cat output/**/*.txt | anew tmp/xss.txt | notify -silent
+      rm -rf output/
     else
       rush -i tmp/subdomains.txt 'python3 /opt/ParamSpider/paramspider.py -d {}'
-      cat output/**/*.txt | anew tmp/xss
+      cat output/**/*.txt | anew tmp/xss.txt
+      rm -rf output/
     fi
     sleep 3600
   done
@@ -77,11 +81,11 @@ arjn() {
     if [ "$notify_enabled" == "true" ]
     then
       arjun -i tmp/subdomains.txt -oT tmp/result -t 10
-      cat tmp/result | anew tmp/xss | notify -silent
+      cat tmp/result | anew tmp/xss.txt | notify -silent
       rm -rf tmp/result
     else
       arjun -i tmp/subdomains.txt -oT tmp/result -t 10
-      cat tmp/result | anew tmp/xss
+      cat tmp/result | anew tmp/xss.txt
       rm -rf tmp/result
     fi
     sleep 3600
@@ -95,7 +99,7 @@ figlet XSS
 notify_enabled=$NOTIFY
 
 echo "
-Will search by domain and write tmp/js.txt
+Will search by domain and write tmp/xss.txt
 
 0 - Dalfox 
 1 - Kxss 
