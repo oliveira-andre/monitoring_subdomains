@@ -69,6 +69,25 @@ rushing_paramspider() {
   done
 }
 
+arjn() {
+  figlet Rush Arjun
+
+  while :
+  do
+    if [ "$notify_enabled" == "true" ]
+    then
+      arjun -i tmp/subdomains.txt -oT tmp/result -t 10
+      cat tmp/result | anew tmp/xss | notify -silent
+      rm -rf tmp/result
+    else
+      arjun -i tmp/subdomains.txt -oT tmp/result -t 10
+      cat tmp/result | anew tmp/xss
+      rm -rf tmp/result
+    fi
+    sleep 3600
+  done
+}
+
 #### END FUNCTIONS ####
 
 figlet XSS
@@ -82,6 +101,7 @@ Will search by domain and write tmp/js.txt
 1 - Kxss 
 2 - GF 
 3 - Rush with ParamSpider 
+4 - Arjun
 
 99 - search by subdomains
 100 - enable notify
@@ -101,6 +121,9 @@ case $service in
     ;;
   '3' | 3)
     rushing_paramspider
+    ;;
+  '4' | 4)
+    arjn
     ;;
   '99' | 99)
     ./src/monitoring.sh
