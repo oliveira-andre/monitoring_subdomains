@@ -147,7 +147,8 @@ Will search by domain and write tmp/subdomains.txt
 5 - github search
 6 - amass
 
-98 - validate URLS
+97 - validate URLS
+98 - search by javascripts
 99 - search by xss
 100 - enable notify
 "
@@ -176,8 +177,11 @@ case $service in
   '6' | 6)
     mass
     ;;
-  '98' | 98)
+  '98' | 97)
     validateUrls
+    ;;
+  '98' | 98)
+    ./src/search_javascripts.sh
     ;;
   '99' | 99)
     ./src/search_xss.sh
