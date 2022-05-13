@@ -143,7 +143,7 @@ Will search by domain and write tmp/subdomains.txt
 1 - subfinder
 2 - chaos
 3 - hacktrails
-4 - assetfinder
+4 - assetfinder (subs-only)
 5 - github search
 6 - amass
 
