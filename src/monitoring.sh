@@ -130,6 +130,18 @@ validateUrls() {
   rm -rf $file
 }
 
+MassTrufflehog() {
+  figlet MassTruffleHog
+  read -p 'identify the enterprise: ' enterprise
+
+  if [ "$notify_enabled" == "true" ]
+  then
+    masstrufflehog -o $enterprise | notify -silent
+  else
+    masstrufflehog -o $enterprise
+  fi
+}
+
 #### END FUNCTIONS ####
 
 figlet Monitoring
@@ -143,9 +155,11 @@ Will search by domain and write tmp/subdomains.txt
 1 - subfinder
 2 - chaos
 3 - hacktrails
-4 - assetfinder (subs-only)
+4 - assetfinder
 5 - github search
 6 - amass
+
+7 - MassTrufflehog (find some tokens on github)
 
 97 - validate URLS
 98 - search by javascripts
@@ -176,6 +190,9 @@ case $service in
     ;;
   '6' | 6)
     mass
+    ;;
+  '6' | 6)
+    MassTrufflehog
     ;;
   '97' | 97)
     validateUrls
